@@ -9,6 +9,18 @@ import json
 def emotion_detector(text_to_analyze):
     """Run Watson emotion detection for the submitted text."""
 
+    no_text = {
+        "anger": None,
+        "disgust": None,
+        "fear": None,
+        "joy": None,
+        "sadness": None,
+        "dominant_emotion": None
+    }
+
+    if not text_to_analyze or not text_to_analyze.strip():
+        return no_text
+
     url = (
     "https://sn-watson-emotion.labs.skills.network/v1/"
     "watson.runtime.nlp.v1/NlpService/EmotionPredict"
@@ -25,6 +37,9 @@ def emotion_detector(text_to_analyze):
     }
 
     response = requests.post(url, headers=headers, json=payload)
+
+    if response.status_code == 400:
+        return no_text
 
     parsed_response = json.loads(response.text)
 

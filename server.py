@@ -23,6 +23,9 @@ def emotion_detector_endpoint():
 
     result = emotion_detector(text_to_analyze)
 
+    if result.get("dominant_emotion") is None:
+        return "Invalid text! Please try again!", 400
+
     anger = result["anger"]
     disgust = result["disgust"]
     fear = result["fear"]
