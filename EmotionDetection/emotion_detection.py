@@ -1,19 +1,14 @@
 # pylint: disable=import-error
 """Short Python program designed to assess emotion in customer comments"""
 
-from flask import Flask, request
 import requests
 import json
 
-app = Flask(__name__)
-app.json.sort_keys = False
-
 # Defining function for user submission
-@app.route("/ask")
-def emotion_detector():
+
+def emotion_detector(text_to_analyze):
     """Run Watson emotion detection for the submitted text."""
 
-    text_to_analyze = request.args.get("text")
     url = (
     "https://sn-watson-emotion.labs.skills.network/v1/"
     "watson.runtime.nlp.v1/NlpService/EmotionPredict"
@@ -47,6 +42,3 @@ def emotion_detector():
     }
 
     return result
-
-if __name__ == "__main__":
-    app.run()
